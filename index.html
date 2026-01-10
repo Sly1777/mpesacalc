@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Free M-Pesa fee calculator for Kenya. Calculate transaction charges, withdrawal fees, and sending costs instantly. Updated 2025 rates.">
+    <meta name="keywords"
+        content="mpesa calculator, mpesa charges, mpesa fees kenya, mpesa transaction cost, safaricom mpesa, mpesa rates 2025">
+    <meta name="author" content="M-Pesa Calculator Kenya">
+    <meta property="og:title" content="M-Pesa Fee Calculator Kenya 2025">
+    <meta property="og:description"
+        content="Calculate M-Pesa transaction fees instantly. Free, accurate, and updated with latest 2025 rates.">
+    <meta property="og:type" content="website">
+    <meta name="google-adsense-account" content="ca-pub-2122260411912800">
+    <title>M-Pesa Fee Calculator Kenya 2025 - Free Transaction Cost Calculator</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2122260411912800"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .transaction-btn {
+            border-color: #e5e7eb;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .transaction-btn:hover {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .transaction-btn.active {
+            border-color: #10b981;
+            background: #10b981;
+            color: white;
+        }
+
+        .quick-btn {
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            background: white;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .quick-btn:hover {
+            border-color: #10b981;
+            background: #f0fdf4;
+            transform: translateY(-2px);
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-green-50 to-green-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-green-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-mobile-alt text-4xl"></i>
+                    <div>
+                        <h1 class="text-2xl md:text-3xl font-bold">M-Pesa Calculator</h1>
+                        <p class="text-green-100 text-sm">Calculate fees instantly - Free Tool</p>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <span class="bg-green-700 px-4 py-2 rounded-full text-sm font-semibold">Updated 2025</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Calculator Card -->
+        <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8 mb-8">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Calculate M-Pesa Charges</h2>
+                <p class="text-gray-600">Enter amount to see transaction fees</p>
+            </div>
+
+            <!-- Transaction Type Selector -->
+            <div class="mb-6">
+                <label class="block text-gray-700 font-semibold mb-3">Select Transaction Type</label>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <button onclick="setTransactionType('send')" id="btn-send"
+                        class="transaction-btn active flex items-center justify-center space-x-2 p-4 rounded-lg border-2">
+                        <i class="fas fa-paper-plane"></i>
+                        <span class="font-semibold">Send Money</span>
+                    </button>
+                    <button onclick="setTransactionType('withdraw')" id="btn-withdraw"
+                        class="transaction-btn flex items-center justify-center space-x-2 p-4 rounded-lg border-2">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span class="font-semibold">Withdraw</span>
+                    </button>
+                    <button onclick="setTransactionType('paybill')" id="btn-paybill"
+                        class="transaction-btn flex items-center justify-center space-x-2 p-4 rounded-lg border-2">
+                        <i class="fas fa-receipt"></i>
+                        <span class="font-semibold">Pay Bill/ Till No</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Amount Input -->
+            <div class="mb-6">
+                <label class="block text-gray-700 font-semibold mb-2">Amount (KES)</label>
+                <div class="relative">
+                    <span
+                        class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-xl font-semibold">KES</span>
+                    <input type="number" id="amount" placeholder="0"
+                        class="w-full pl-20 pr-4 py-4 text-2xl border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none transition-all"
+                        oninput="calculateFee()" min="0" step="1">
+                </div>
+            </div>
+
+            <!-- Quick Amount Buttons -->
+            <div class="mb-6">
+                <label class="block text-gray-700 font-semibold mb-2">Quick Select</label>
+                <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
+                    <button onclick="setAmount(100)" class="quick-btn">100</button>
+                    <button onclick="setAmount(500)" class="quick-btn">500</button>
+                    <button onclick="setAmount(1000)" class="quick-btn">1,000</button>
+                    <button onclick="setAmount(2000)" class="quick-btn">2,000</button>
+                    <button onclick="setAmount(5000)" class="quick-btn">5,000</button>
+                    <button onclick="setAmount(10000)" class="quick-btn">10,000</button>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="error-message" class="hidden mb-4 bg-red-50 border-2 border-red-300 rounded-lg p-4">
+                <div class="flex items-center space-x-2 text-red-700">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span class="font-semibold" id="error-text"></span>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="results" class="hidden">
+                <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-6 text-white mb-4 shadow-lg">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <p class="text-green-100 text-sm mb-1">Transaction Fee</p>
+                            <p class="text-3xl font-bold" id="fee">KES 0</p>
+                        </div>
+                        <div>
+                            <p class="text-green-100 text-sm mb-1">Total Cost</p>
+                            <p class="text-3xl font-bold" id="total">KES 0</p>
+                        </div>
+                        <div>
+                            <p class="text-green-100 text-sm mb-1">Recipient Gets</p>
+                            <p class="text-3xl font-bold" id="recipient">KES 0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Breakdown -->
+                <div class="bg-gray-50 rounded-lg p-4 border-2 border-gray-200">
+                    <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                        <i class="fas fa-info-circle text-green-600 mr-2"></i>
+                        Transaction Breakdown
+                    </h3>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Amount to send:</span>
+                            <span class="font-semibold" id="breakdown-amount">KES 0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">M-Pesa charge:</span>
+                            <span class="font-semibold text-red-600" id="breakdown-fee">KES 0</span>
+                        </div>
+                        <div class="border-t pt-2 flex justify-between">
+                            <span class="text-gray-800 font-semibold">You pay:</span>
+                            <span class="font-bold text-lg text-green-600" id="breakdown-total">KES 0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ad Space 1 - Top Banner -->
+        <div
+            class="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl p-8 text-center mb-8 border-2 border-dashed border-gray-300">
+            <p class="text-gray-500 font-semibold mb-1">📢 Advertisement</p>
+            <p class="text-gray-400 text-xs">Google AdSense - 728x90 Leaderboard</p>
+            <p class="text-gray-400 text-xs mt-1">Insert AdSense code here for revenue</p>
+        </div>
+
+        <!-- Fee Tables -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <!-- Send Money Rates -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-paper-plane text-green-600 mr-2"></i>
+                    Send Money Rates
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-gray-700">Amount (KES)</th>
+                                <th class="px-3 py-2 text-right text-gray-700">Fee</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y">
+                            <tr>
+                                <td class="px-3 py-2">1 - 100</td>
+                                <td class="px-3 py-2 text-right font-semibold text-green-600">Free</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">101 - 500</td>
+                                <td class="px-3 py-2 text-right font-semibold">7</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">501 - 1,000</td>
+                                <td class="px-3 py-2 text-right font-semibold">13</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">1,001 - 1,500</td>
+                                <td class="px-3 py-2 text-right font-semibold">23</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">1,501 - 2,500</td>
+                                <td class="px-3 py-2 text-right font-semibold">33</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">2,501 - 3,500</td>
+                                <td class="px-3 py-2 text-right font-semibold">53</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">3,501 - 5,000</td>
+                                <td class="px-3 py-2 text-right font-semibold">57</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">5,001 - 7,500</td>
+                                <td class="px-3 py-2 text-right font-semibold">78</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">7,501 - 10,000</td>
+                                <td class="px-3 py-2 text-right font-semibold">90</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">10,001 - 15,000</td>
+                                <td class="px-3 py-2 text-right font-semibold">100</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">15,001 - 20,000</td>
+                                <td class="px-3 py-2 text-right font-semibold">105</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">20,001 - 250,000</td>
+                                <td class="px-3 py-2 text-right font-semibold">110</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Withdraw Rates -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-hand-holding-usd text-green-600 mr-2"></i>
+                    Withdrawal Rates
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-gray-700">Amount (KES)</th>
+                                <th class="px-3 py-2 text-right text-gray-700">Fee</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y">
+                            <tr>
+                                <td class="px-3 py-2">50 - 100</td>
+                                <td class="px-3 py-2 text-right font-semibold">11</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">101 - 500</td>
+                                <td class="px-3 py-2 text-right font-semibold">29</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">501 - 1,000</td>
+                                <td class="px-3 py-2 text-right font-semibold">29</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">1,001 - 1,500</td>
+                                <td class="px-3 py-2 text-right font-semibold">29</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">1,501 - 2,500</td>
+                                <td class="px-3 py-2 text-right font-semibold">49</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">2,501 - 3,500</td>
+                                <td class="px-3 py-2 text-right font-semibold">49</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">3,501 - 5,000</td>
+                                <td class="px-3 py-2 text-right font-semibold">69</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">5,001 - 7,500</td>
+                                <td class="px-3 py-2 text-right font-semibold">87</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">7,501 - 10,000</td>
+                                <td class="px-3 py-2 text-right font-semibold">115</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">10,001 - 15,000</td>
+                                <td class="px-3 py-2 text-right font-semibold">167</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">15,001 - 20,000</td>
+                                <td class="px-3 py-2 text-right font-semibold">185</td>
+                            </tr>
+                            <tr>
+                                <td class="px-3 py-2">20,001 - 150,000</td>
+                                <td class="px-3 py-2 text-right font-semibold">300</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ad Space 2 - Middle Banner -->
+        <div
+            class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-8 text-center mb-8 border-2 border-dashed border-blue-300">
+            <p class="text-blue-600 font-semibold mb-1">💰 Affiliate Link Space</p>
+            <p class="text-blue-500 text-sm">Promote: Mobile Loans (Tala, Branch) | Banks (KCB M-Pesa) | Fintech Apps
+            </p>
+            <p class="text-blue-400 text-xs mt-1">Earn KES 50-500 per referral</p>
+        </div>
+
+        <!-- Tips Section -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+                Money-Saving Tips
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex items-start space-x-3 p-3 bg-green-50 rounded-lg">
+                    <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Send KES 100 or less</h4>
+                        <p class="text-sm text-gray-600">Transactions under KES 100 are FREE!</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-3 p-3 bg-green-50 rounded-lg">
+                    <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Use PayBill for bills</h4>
+                        <p class="text-sm text-gray-600">Lower fees than sending to individuals</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-3 p-3 bg-green-50 rounded-lg">
+                    <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Withdraw at agents</h4>
+                        <p class="text-sm text-gray-600">Agent withdrawals have lower fees than ATMs</p>
+                    </div>
+                </div>
+                <div class="flex items-start space-x-3 p-3 bg-green-50 rounded-lg">
+                    <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                    <div>
+                        <h4 class="font-semibold text-gray-800">Combine transactions</h4>
+                        <p class="text-sm text-gray-600">One large transaction costs less than multiple small ones</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-question-circle text-blue-600 mr-2"></i>
+                Frequently Asked Questions
+            </h3>
+            <div class="space-y-4">
+                <div class="border-b pb-3">
+                    <h4 class="font-semibold text-gray-800 mb-2">Are these M-Pesa rates accurate?</h4>
+                    <p class="text-sm text-gray-600">Yes! Updated with official Safaricom M-Pesa rates for 2025.</p>
+                </div>
+                <div class="border-b pb-3">
+                    <h4 class="font-semibold text-gray-800 mb-2">What's the maximum I can send?</h4>
+                    <p class="text-sm text-gray-600">KES 250,000 per transaction. Daily limit is KES 500,000.</p>
+                </div>
+                <div class="border-b pb-3">
+                    <h4 class="font-semibold text-gray-800 mb-2">Is this calculator free?</h4>
+                    <p class="text-sm text-gray-600">100% free! No registration, no hidden fees. Use it anytime.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-800 mb-2">Do PayBill transactions have fees?</h4>
+                    <p class="text-sm text-gray-600">Yes, but usually lower than person-to-person transfers. Check with
+                        your service provider.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ad Space 3 - Bottom Banner -->
+        <div
+            class="bg-gradient-to-r from-purple-50 to-purple-100 rounded-xl p-8 text-center mb-8 border-2 border-dashed border-purple-300">
+            <p class="text-purple-600 font-semibold mb-1">🎯 Sponsored Content Space</p>
+            <p class="text-purple-500 text-sm">Partner with fintech companies for KES 20,000-200,000/month</p>
+        </div>
+
+        <!-- Share Section -->
+        <div class="bg-gradient-to-r from-green-600 to-green-700 rounded-xl shadow-lg p-6 text-white text-center">
+            <h3 class="text-xl font-bold mb-2">Found this useful?</h3>
+            <p class="mb-4">Share with friends and family on WhatsApp!</p>
+            <div class="flex justify-center space-x-4">
+                <button onclick="shareOnWhatsApp()"
+                    class="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 transition-all flex items-center space-x-2">
+                    <i class="fab fa-whatsapp text-xl"></i>
+                    <span>Share on WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">© 2025 M-Pesa Calculator Kenya. All rights reserved.</p>
+            <p class="text-gray-400 text-sm">Not affiliated with Safaricom. Rates updated regularly for accuracy.</p>
+            <div class="mt-4 flex justify-center space-x-6">
+                <a href="privacy-policy.html" class="text-gray-400 hover:text-white transition-colors">Privacy
+                    Policy</a>
+                <a href="terms-of-use.html" class="text-gray-400 hover:text-white transition-colors">Terms of Use</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentTransactionType = 'send';
+
+        // M-Pesa fee structure (2025 rates)
+        const feeStructure = {
+            send: [
+                { min: 1, max: 100, fee: 0 },
+                { min: 101, max: 500, fee: 7 },
+                { min: 501, max: 1000, fee: 13 },
+                { min: 1001, max: 1500, fee: 23 },
+                { min: 1501, max: 2500, fee: 33 },
+                { min: 2501, max: 3500, fee: 53 },
+                { min: 3501, max: 5000, fee: 57 },
+                { min: 5001, max: 7500, fee: 78 },
+                { min: 7501, max: 10000, fee: 90 },
+                { min: 10001, max: 15000, fee: 100 },
+                { min: 15001, max: 20000, fee: 105 },
+                { min: 20001, max: 250000, fee: 110 }
+            ],
+            withdraw: [
+                { min: 50, max: 100, fee: 11 },
+                { min: 101, max: 500, fee: 29 },
+                { min: 501, max: 1000, fee: 29 },
+                { min: 1001, max: 1500, fee: 29 },
+                { min: 1501, max: 2500, fee: 49 },
+                { min: 2501, max: 3500, fee: 49 },
+                { min: 3501, max: 5000, fee: 69 },
+                { min: 5001, max: 7500, fee: 87 },
+                { min: 7501, max: 10000, fee: 115 },
+                { min: 10001, max: 15000, fee: 167 },
+                { min: 15001, max: 20000, fee: 185 },
+                { min: 20001, max: 150000, fee: 300 }
+            ],
+            paybill: [
+                { min: 1, max: 100, fee: 0 },
+                { min: 101, max: 500, fee: 5 },
+                { min: 501, max: 1000, fee: 10 },
+                { min: 1001, max: 1500, fee: 15 },
+                { min: 1501, max: 2500, fee: 25 },
+                { min: 2501, max: 3500, fee: 40 },
+                { min: 3501, max: 5000, fee: 45 },
+                { min: 5001, max: 7500, fee: 60 },
+                { min: 7501, max: 10000, fee: 75 },
+                { min: 10001, max: 15000, fee: 85 },
+                { min: 15001, max: 20000, fee: 90 },
+                { min: 20001, max: 250000, fee: 95 }
+            ]
+        };
+
+        function setTransactionType(type) {
+            currentTransactionType = type;
+
+            // Update button states
+            document.querySelectorAll('.transaction-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`btn-${type}`).classList.add('active');
+
+            // Recalculate if amount exists
+            calculateFee();
+        }
+
+        function setAmount(amount) {
+            document.getElementById('amount').value = amount;
+            calculateFee();
+        }
+
+        function calculateFee() {
+            const amountInput = document.getElementById('amount').value;
+            const amount = parseFloat(amountInput) || 0;
+
+            // Hide error and results initially
+            document.getElementById('error-message').classList.add('hidden');
+            document.getElementById('results').classList.add('hidden');
+
+            if (amount <= 0) {
+                return;
+            }
+
+            // Get fee structure for current transaction type
+            const fees = feeStructure[currentTransactionType];
+
+            // Validation checks
+            const maxAmount = fees[fees.length - 1].max;
+            const minAmount = fees[0].min;
+
+            // Check if amount is below minimum
+            if (amount < minAmount) {
+                showError(`Minimum amount for ${currentTransactionType} is KES ${minAmount.toLocaleString()}`);
+                return;
+            }
+
+            // Check if amount exceeds maximum
+            if (amount > maxAmount) {
+                showError(`Maximum amount for ${currentTransactionType} is KES ${maxAmount.toLocaleString()}`);
+                return;
+            }
+
+            // Find applicable fee
+            let fee = 0;
+            let feeFound = false;
+
+            for (let range of fees) {
+                if (amount >= range.min && amount <= range.max) {
+                    fee = range.fee;
+                    feeFound = true;
+                    break;
+                }
+            }
+
+            // If no fee found, something went wrong
+            if (!feeFound) {
+                showError('Unable to calculate fee for this amount. Please try again.');
+                return;
+            }
+
+            // Calculate totals
+            const total = amount + fee;
+            const recipient = amount;
+
+            // Format numbers with commas (improved for large numbers)
+            const formatNumber = (num) => {
+                // Handle very large numbers properly
+                if (num >= 1000000) {
+                    return num.toLocaleString('en-KE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+                }
+                return num.toLocaleString('en-KE', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+            };
+
+            // Update display
+            document.getElementById('fee').textContent = `KES ${formatNumber(fee)}`;
+            document.getElementById('total').textContent = `KES ${formatNumber(total)}`;
+            document.getElementById('recipient').textContent = `KES ${formatNumber(recipient)}`;
+
+            document.getElementById('breakdown-amount').textContent = `KES ${formatNumber(amount)}`;
+            document.getElementById('breakdown-fee').textContent = `KES ${formatNumber(fee)}`;
+            document.getElementById('breakdown-total').textContent = `KES ${formatNumber(total)}`;
+
+            // Show results
+            document.getElementById('results').classList.remove('hidden');
+        }
+
+        function showError(message) {
+            document.getElementById('error-text').textContent = message;
+            document.getElementById('error-message').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
+        }
+
+        function shareOnWhatsApp() {
+            const text = encodeURIComponent('Check out this free M-Pesa calculator! Calculate transaction fees instantly: ' + window.location.href);
+            window.open(`https://wa.me/?text=${text}`, '_blank');
+        }
+
+        // Track page views (for analytics)
+        console.log('M-Pesa Calculator loaded - Ready for monetization!');
+    </script>
+</body>
+
+</html>
