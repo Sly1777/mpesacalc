@@ -61,7 +61,7 @@ Share in:
 ```
 🇰🇪 Free M-Pesa Calculator!
 ✅ Calculate fees instantly
-✅ Updated 2025 rates
+✅ Updated 2026 rates
 ✅ Send, Withdraw, PayBill
 [YOUR-LINK]
 #MpesaKenya #KOT #Kenya
